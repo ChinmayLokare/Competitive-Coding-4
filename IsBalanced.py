@@ -5,7 +5,7 @@
 #         self.left = left
 #         self.right = right
 
-# Space Complexity - o(1)
+# Space Complexity - o(n)
 # Time Complexity - o(n)
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
@@ -16,14 +16,14 @@ class Solution:
         def height(node):
             if not node:
                 return 0
+            left = height(node.left)
+            right = height(node.right)
+            diff = left - right
+            if abs(diff)>1 or left==-1 or right == -1:
+                return -1
+
             return 1 + max(height(node.left),height(node.right))
 
-        left = height(root.left)
-        right = height(root.right)
+       
 
-        diff = left - right
-
-        if abs(diff)>1:
-            return False
-
-        return self.isBalanced(root.left) and self.isBalanced(root.right)
+        return height(root)!=-1
